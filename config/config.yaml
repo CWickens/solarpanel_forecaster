@@ -7,3 +7,9 @@ live_weather_data_ingestion:
   local_data_file: artifacts/01_raw/live_weather.json
   hours_of_history: 4
   secret_info: config/secret_keys.yaml
+
+
+live_weather_data_transformation:
+  root_dir: artifacts/02_intermediate
+  input_file: artifacts/01_raw/live_weather.json
+  output_file: artifacts/02_intermediate/live_weather.parquet

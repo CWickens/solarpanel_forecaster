@@ -16,3 +16,10 @@ class OpenWeatherMapPrivateConfig:
     lat: float
     lon: float
     apikey: str
+
+
+@dataclass(frozen=True)
+class LiveWeatherDataTransformationConfig:
+    root_dir: Path
+    input_file: Path
+    output_file: Path

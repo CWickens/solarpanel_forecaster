@@ -7,7 +7,8 @@ from solarpanel_forecaster.constants import (
 from solarpanel_forecaster.utils.common import read_yaml, create_directories
 from solarpanel_forecaster.entity.config_entity import (
     LiveWeatherDataIngestionConfig,
-    OpenWeatherMapPrivateConfig)
+    OpenWeatherMapPrivateConfig,
+    LiveWeatherDataTransformationConfig)
 
 
 class ConfigurationManager:
@@ -49,3 +50,17 @@ class ConfigurationManager:
             lon=config_secret.lon,
             apikey=config_secret.apikey)
         return openweathermap_private_config
+
+    def get_live_weather_data_transformation_config(self) \
+            -> LiveWeatherDataTransformationConfig:
+        config = self.config.live_weather_data_transformation
+
+        create_directories([config.root_dir])
+
+        live_weather_data_transformation_config = \
+            LiveWeatherDataTransformationConfig(
+                root_dir=config.root_dir,
+                input_file=config.input_file,
+                output_file=config.output_file
+                )
+        return live_weather_data_transformation_config
