@@ -1,0 +1,9 @@
+artifacts_root: artifacts
+
+
+live_weather_data_ingestion:
+  root_dir: artifacts/01_raw
+  base_url: https://api.openweathermap.org/data/3.0/onecall
+  local_data_file: artifacts/01_raw/live_weather.json
+  hours_of_history: 4
+  secret_info: config/secret_keys.yaml

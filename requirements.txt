@@ -10,4 +10,5 @@ joblib
 types-PyYAML
 pyarrow
 fastparquet
+flake8
 -e .
