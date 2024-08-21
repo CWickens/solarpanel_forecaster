@@ -24,3 +24,4 @@ class LiveWeatherDataTransformationConfig:
     root_dir: Path
     input_file: Path
     output_file: Path
+    hours_of_forecast: int

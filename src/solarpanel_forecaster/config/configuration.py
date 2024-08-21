@@ -62,6 +62,7 @@ class ConfigurationManager:
             LiveWeatherDataTransformationConfig(
                 root_dir=config.root_dir,
                 input_file=config.input_file,
-                output_file=config.output_file
+                output_file=config.output_file,
+                hours_of_forecast=config.hours_of_forecast
                 )
         return live_weather_data_transformation_config
