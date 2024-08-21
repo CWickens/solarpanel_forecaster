@@ -25,7 +25,20 @@ class LiveWeatherDataIngestion:
             timestamp_list.append(timestamp - datetime.timedelta(hours=i))
         return timestamp_list
 
-    def make_url(self, dt):
+    def make_url_current(self):
+        base_url = self.config.base_url_forecast
+        config_secret = self.config_secret
+
+        params = {
+            'lat': config_secret.lat,
+            'lon': config_secret.lon,
+            'apikey': config_secret.apikey
+        }
+
+        url = f"{base_url}?{urllib.parse.urlencode(params)}"
+        return url
+
+    def make_url_history(self, dt):
         base_url = self.config.base_url
         config_secret = self.config_secret
 
@@ -46,7 +59,11 @@ class LiveWeatherDataIngestion:
         data = {}
         logger.info('Downloading data from OpenWeatherMap ...')
         for idx, dt in enumerate(all_times):
-            url = self.make_url(dt=dt)
+            if idx == 0:
+                url = self.make_url_current()
+            else:
+                url = self.make_url_history(dt=dt)
+
             # Send GET request to the API
             response = requests.get(url)
             if response.status_code == 200:

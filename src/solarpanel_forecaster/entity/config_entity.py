@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class LiveWeatherDataIngestionConfig:
     root_dir: Path
     base_url: str
+    base_url_forecast: str
     local_data_file: Path
     hours_of_history: int
     secret_info: Path

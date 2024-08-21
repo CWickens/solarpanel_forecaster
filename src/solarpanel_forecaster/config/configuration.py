@@ -36,6 +36,7 @@ class ConfigurationManager:
         live_weather_data_ingestion_config = LiveWeatherDataIngestionConfig(
             root_dir=config.root_dir,
             base_url=config.base_url,
+            base_url_forecast=config.base_url_forecast,
             local_data_file=config.local_data_file,
             hours_of_history=config.hours_of_history,
             secret_info=config.secret_info
