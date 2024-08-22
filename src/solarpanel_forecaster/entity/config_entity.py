@@ -23,5 +23,6 @@ class OpenWeatherMapPrivateConfig:
 class LiveWeatherDataTransformationConfig:
     root_dir: Path
     input_file: Path
-    output_file: Path
+    output_file_forecast: Path
+    output_file_actuals: Path
     hours_of_forecast: int

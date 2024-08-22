@@ -21,6 +21,11 @@ class LiveWeatherDataTransformation:
             logger.info("Loading complete!")
         return data
 
+    def save(self, df, path):
+        logger.info(f"Saving to {path}")
+        df.to_pickle(path)
+        logger.info(("Save successful!"))
+
     def get_current_weather(self):
         data = self.data
 
@@ -49,5 +54,5 @@ class LiveWeatherDataTransformation:
     def get_hourly_forecast(self):
         data = self.data
         hours_of_forecast = self.config.hours_of_forecast
-
-        return data['0']['hourly'][0:hours_of_forecast]
+        df = pd.DataFrame(data['0']['hourly'][0:hours_of_forecast])
+        return df

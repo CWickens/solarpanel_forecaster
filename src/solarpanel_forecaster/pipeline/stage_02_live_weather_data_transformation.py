@@ -19,9 +19,15 @@ class LiveWeatherDataTransformationPipeline:
             config=live_weather_data_transformation_config)
         live_weather_data_transformation.load()
 
-        # TODO: merge actual and forcast data
-        live_weather_data_transformation.get_actual_weather()
-        live_weather_data_transformation.get_hourly_forecast()
+        df_forecast = live_weather_data_transformation.get_hourly_forecast()
+        df_actual = live_weather_data_transformation.get_actual_weather()
+
+        live_weather_data_transformation.save(
+            df_forecast,
+            live_weather_data_transformation_config.output_file_forecast)
+        live_weather_data_transformation.save(
+            df_actual,
+            live_weather_data_transformation_config.output_file_actuals)
 
 
 if __name__ == '__main__':

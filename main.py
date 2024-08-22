@@ -27,3 +27,5 @@ try:
 except Exception as e:
     logger(e)
     raise e
+
+logger.info('-------- PIPELINE RUN COMPLETED! --------')
