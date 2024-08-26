@@ -16,3 +16,13 @@ live_weather_data_transformation:
   output_file_forecast: artifacts/02_intermediate/live_weather_forecast.pickle
   output_file_actuals: artifacts/02_intermediate/live_weather_actuals.pickle
   hours_of_forecast: 8
+
+solis_data_ingestion:
+  root_dir: artifacts/01_raw
+  output_file: artifacts/01_raw/solis.json 
+  url: 'https://www.soliscloud.com:13333'
+  VERB: "POST"
+  string_format: '%a, %d %b %Y %H:%M:%S GMT'
+  encoder: 'utf-8'
+  Content_Type: "application/json"
+  CanonicalizedResource: "/v1/api/inverterDay"

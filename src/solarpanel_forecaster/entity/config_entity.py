@@ -26,3 +26,22 @@ class LiveWeatherDataTransformationConfig:
     output_file_forecast: Path
     output_file_actuals: Path
     hours_of_forecast: int
+
+
+@dataclass(frozen=True)
+class SolisDataIngestionConfig:
+    root_dir: str
+    output_file: str
+    url: str
+    VERB: str
+    string_format: str
+    encoder: str
+    Content_Type: str
+    CanonicalizedResource: str
+
+
+@dataclass(frozen=True)
+class SolisPrivateConfig:
+    KeyId: str
+    secretKey: str
+    sn: str

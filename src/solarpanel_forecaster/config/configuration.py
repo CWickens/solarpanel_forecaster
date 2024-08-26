@@ -8,7 +8,10 @@ from solarpanel_forecaster.utils.common import read_yaml, create_directories
 from solarpanel_forecaster.entity.config_entity import (
     LiveWeatherDataIngestionConfig,
     OpenWeatherMapPrivateConfig,
-    LiveWeatherDataTransformationConfig)
+    LiveWeatherDataTransformationConfig,
+    SolisDataIngestionConfig,
+    SolisPrivateConfig
+    )
 
 
 class ConfigurationManager:
@@ -67,3 +70,31 @@ class ConfigurationManager:
                 hours_of_forecast=config.hours_of_forecast
                 )
         return live_weather_data_transformation_config
+
+    def get_solis_data_ingestion_config(self) -> SolisDataIngestionConfig:
+        config = self.config.solis_data_ingestion
+
+        create_directories([config.root_dir])
+
+        solis_data_ingestion_config = \
+            SolisDataIngestionConfig(
+                root_dir=config.root_dir,
+                output_file=config.output_file,
+                url=config.url,
+                VERB=config.VERB,
+                string_format=config.string_format,
+                encoder=config.encoder,
+                Content_Type=config.Content_Type,
+                CanonicalizedResource=config.CanonicalizedResource
+            )
+        return solis_data_ingestion_config
+
+    def get_solis_private_config(self) -> SolisPrivateConfig:
+        config = self.config_secret.solis_private
+
+        solis_private_config = SolisPrivateConfig(
+            KeyId=config.KeyId,
+            secretKey=config.secretKey,
+            sn=config.sn
+        )
+        return solis_private_config
