@@ -6,6 +6,7 @@ from solarpanel_forecaster.pipeline.stage_02_live_weather_data_transformation\
 from solarpanel_forecaster.pipeline.stage_03_solis_data_ingestion\
     import SolisDataIngestionPipeline
 
+logger.info('-------- TRIGGERING MAIN PIPELINE! --------')
 
 STAGE_NAME = "live weather data ingestion stage"
 try:
@@ -43,4 +44,4 @@ except Exception as e:
     raise e
 
 
-logger.info('-------- PIPELINE RUN COMPLETED! --------')
+logger.info('-------- MAIN PIPELINE RUN COMPLETED! --------')

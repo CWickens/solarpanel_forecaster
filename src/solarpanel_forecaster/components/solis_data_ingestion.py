@@ -63,22 +63,11 @@ class SolisDataIngestion:
         Authorization = "API " + self.config_secret.KeyId + ":" \
                         + Sign.decode(self.config.encoder)
 
-        requestStr = (
-            self.config.VERB + " " + self.config.CanonicalizedResource + "\n"
-            + "Content-MD5: " + Content_MD5 + "\n"
-            + "Content-Type: " + self.config.Content_Type + "\n"
-            + "Date: " + Date + "\n"
-            + "Authorization: " + Authorization + "\n"
-            + "Body：" + Body)
         header = {"Content-MD5": Content_MD5,
                   "Content-Type": self.config.Content_Type,
                   "Date": Date,
                   "Authorization": Authorization
                   }
-        header1 = {"Content-Type": self.config.Content_Type,
-                   "Date": Date,
-                   "Authorization": Authorization
-                   }
 
         req = self.config.url + self.config.CanonicalizedResource
         x = requests.post(req, data=Body, headers=header)
