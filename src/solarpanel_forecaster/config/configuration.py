@@ -10,7 +10,8 @@ from solarpanel_forecaster.entity.config_entity import (
     OpenWeatherMapPrivateConfig,
     LiveWeatherDataTransformationConfig,
     SolisDataIngestionConfig,
-    SolisPrivateConfig
+    SolisPrivateConfig,
+    SolisDataTransformationConfig
     )
 
 
@@ -98,3 +99,14 @@ class ConfigurationManager:
             sn=config.sn
         )
         return solis_private_config
+
+    def get_solis_data_transformation_config(self) -> \
+            SolisDataTransformationConfig:
+        config = self.config.solis_data_transformation
+
+        solis_data_transformation_config = SolisDataTransformationConfig(
+            root_dir=config.root_dir,
+            input_file=config.input_file,
+            output_file=config.output_file
+        )
+        return solis_data_transformation_config

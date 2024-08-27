@@ -5,6 +5,8 @@ from solarpanel_forecaster.pipeline.stage_02_live_weather_data_transformation\
     import LiveWeatherDataTransformationPipeline
 from solarpanel_forecaster.pipeline.stage_03_solis_data_ingestion\
     import SolisDataIngestionPipeline
+from solarpanel_forecaster.pipeline.stage_04_solis_data_transformation\
+    import SolisDataTransformationPipeline
 
 logger.info('-------- TRIGGERING MAIN PIPELINE! --------')
 
@@ -43,5 +45,16 @@ except Exception as e:
     logger(e)
     raise e
 
+STAGE_NAME = "Solis data transformation"
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    obj = SolisDataTransformationPipeline()
+    obj.main()
+    logger.info(
+        f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x"
+        )
+except Exception as e:
+    logger(e)
+    raise e
 
 logger.info('-------- MAIN PIPELINE RUN COMPLETED! --------')

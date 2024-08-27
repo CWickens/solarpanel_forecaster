@@ -45,3 +45,10 @@ class SolisPrivateConfig:
     KeyId: str
     secretKey: str
     sn: str
+
+
+@dataclass(frozen=True)
+class SolisDataTransformationConfig:
+    root_dir: str
+    input_file: Path
+    output_file: Path

@@ -26,3 +26,9 @@ solis_data_ingestion:
   encoder: 'utf-8'
   Content_Type: "application/json"
   CanonicalizedResource: "/v1/api/inverterDay"
+
+solis_data_transformation:
+  root_dir: artifacts/02_intermediate
+  input_file: artifacts/01_raw/solis.json 
+  output_file: artifacts/02_intermediate/solis_transformed.pickle 
+
