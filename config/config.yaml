@@ -15,7 +15,7 @@ live_weather_data_transformation:
   input_file: artifacts/01_raw/live_weather.json
   output_file_forecast: artifacts/02_intermediate/live_weather_forecast.pickle
   output_file_actuals: artifacts/02_intermediate/live_weather_actuals.pickle
-  hours_of_forecast: 8
+  hours_of_forecast: 48
 
 solis_data_ingestion:
   root_dir: artifacts/01_raw

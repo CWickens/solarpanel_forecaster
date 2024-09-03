@@ -11,4 +11,7 @@ types-PyYAML
 pyarrow
 fastparquet
 flake8
+openmeteo-requests
+requests-cache 
+retry-requests
 -e .
