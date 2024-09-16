@@ -25,9 +25,35 @@ open_metro_API:
     - temperature_2m
     - relative_humidity_2m
     - dew_point_2m
-    - global_tilted_irradiance_instant
+    - apparent_temperature
+    - precipitation
+    - rain
+    - snowfall
+    - snowfall_height
+    - freezing_level_height
+    - sunshine_duration
+    - weather_code
+    - wind_speed_10m
+    - wind_speed_80m
+    - wind_direction_10m
+    - wind_direction_80m
+    - wind_gusts_10m
+    - visibility
+    - cape
+    - lightning_potential
+    - is_day
+    - shortwave_radiation
+    - direct_radiation
+    - diffuse_radiation
+    - direct_normal_irradiance
+    - global_tilted_irradiance
+    - terrestrial_radiation
     - shortwave_radiation_instant
-    - direct_radiation_instant 
+    - direct_radiation_instant
+    - diffuse_radiation_instant
+    - direct_normal_irradiance_instant
+    - global_tilted_irradiance_instant
+    - terrestrial_radiation_instant
   features_hourly: 
     - cloud_cover 
     - cloud_cover_low
@@ -49,7 +75,11 @@ open_metro_forecast:
 
 solis_data_ingestion:
   root_dir: artifacts/01_raw
-  output_file: artifacts/01_raw/solis.json 
+  # output_file: artifacts/01_raw/solis.json 
+  output_file_training: artifacts/01_raw/solis_historical.pickle
+  training_start_date: "04/02/2023" # "04/02/2023"
+  training_end_date: "09/06/2024" # "14/08/2024"
+  output_file_today: artifacts/01_raw/solis_today.pickle
   url: 'https://www.soliscloud.com:13333'
   VERB: "POST"
   string_format: '%a, %d %b %Y %H:%M:%S GMT'

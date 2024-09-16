@@ -81,7 +81,10 @@ class ConfigurationManager:
         solis_data_ingestion_config = \
             SolisDataIngestionConfig(
                 root_dir=config.root_dir,
-                output_file=config.output_file,
+                output_file_training=config.output_file_training,
+                output_file_today=config.output_file_today,
+                training_start_date=config.training_start_date,
+                training_end_date=config.training_end_date,
                 url=config.url,
                 VERB=config.VERB,
                 string_format=config.string_format,
