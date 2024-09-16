@@ -56,7 +56,10 @@ class OpenMetroForecastConfig:
 @dataclass(frozen=True)
 class SolisDataIngestionConfig:
     root_dir: str
-    output_file: str
+    output_file_training: str
+    training_start_date: str
+    training_end_date: str
+    output_file_today: str
     url: str
     VERB: str
     string_format: str
