@@ -2,30 +2,55 @@ from pathlib import Path
 from dataclasses import dataclass
 
 
+# @dataclass(frozen=True)
+# class LiveWeatherDataIngestionConfig:
+#     root_dir: Path
+#     base_url: str
+#     base_url_forecast: str
+#     local_data_file: Path
+#     hours_of_history: int
+#     secret_info: Path
+
+
+# @dataclass
+# class OpenWeatherMapPrivateConfig:
+#     lat: float
+#     lon: float
+#     apikey: str
+
+
+# @dataclass(frozen=True)
+# class LiveWeatherDataTransformationConfig:
+#     root_dir: Path
+#     input_file: Path
+#     output_file_forecast: Path
+#     output_file_actuals: Path
+#     hours_of_forecast: int
+
+
 @dataclass(frozen=True)
-class LiveWeatherDataIngestionConfig:
+class OpenMetroAPIConfig:
     root_dir: Path
-    base_url: str
-    base_url_forecast: str
-    local_data_file: Path
-    hours_of_history: int
-    secret_info: Path
-
-
-@dataclass
-class OpenWeatherMapPrivateConfig:
-    lat: float
-    lon: float
-    apikey: str
+    latitude: float
+    longitude: float
+    features_minutely_15: list
+    features_hourly: list
 
 
 @dataclass(frozen=True)
-class LiveWeatherDataTransformationConfig:
-    root_dir: Path
-    input_file: Path
-    output_file_forecast: Path
-    output_file_actuals: Path
-    hours_of_forecast: int
+class OpenMetroHitoricalConfig:
+    local_data_file_15minutely: Path
+    local_data_file_hourly: Path
+    start_date: str
+    end_date: str
+
+
+@dataclass(frozen=True)
+class OpenMetroForecastConfig:
+    local_data_file_15minutely: Path
+    local_data_file_hourly: Path
+    past_days: float
+    forecast_days: float
 
 
 @dataclass(frozen=True)
