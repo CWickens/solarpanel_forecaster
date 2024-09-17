@@ -104,6 +104,25 @@ training_data_preparation:
     - cloud_cover_mid
     - cloud_cover_high
     - is_day
+
+modeling_XGBoost:
+  root_dir: artifacts/04_model
+  historical_data: artifacts/03_features/historical_training_data.pickle
+  
+  target: pac
+  test_size: 0.2
+  cv: 5
+  scoring: neg_mean_squared_error 
+  max_depth: [3, 5, 7]
+  learning_rate: [0.01, 0.1, 0.3]
+  n_estimators: [25, 50, 100]
+  subsample: [0.8, 0.9, 1.0]
+
+  X_train_data_path: artifacts/04_model/X_train.pickle
+  X_test_data_path: artifacts/04_model/X_test.pickle
+  y_train_data_path: artifacts/04_model/y_train.pickle
+  y_test_data_path: artifacts/04_model/y_test.pickle
+  model_path: artifacts/04_model/xgboost_model.pickle
   
 
     

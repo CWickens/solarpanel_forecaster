@@ -8,6 +8,9 @@ from solarpanel_forecaster.pipeline.train.\
 from solarpanel_forecaster.pipeline.train.\
     stage_03_prepare_data_for_modeling import (
         PrepareDataTrainingPipeline)
+from solarpanel_forecaster.pipeline.train.\
+    stage_04_train_solar_model_xgboost import (
+        XGBoostSolarTrainingPipeline)
 
 logger.info('-------- TRIGGERING TRAINING PIPELINE! --------')
 
@@ -47,6 +50,18 @@ try:
         )
 except Exception as e:
     logger(e)
+    raise e
+
+STAGE_NAME = "STAGE 04: Train model"
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    obj = XGBoostSolarTrainingPipeline()
+    obj.main()
+    logger.info(
+        f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x"
+        )
+except Exception as e:
+    logger.exception(e)
     raise e
 
 logger.info('-------- TRAINING PIPELINE RUN COMPLETED! --------')
