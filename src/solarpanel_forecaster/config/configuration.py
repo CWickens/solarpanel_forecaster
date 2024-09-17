@@ -15,7 +15,8 @@ from solarpanel_forecaster.entity.config_entity import (
     SolisDataIngestionConfig,
     SolisPrivateConfig,
     # SolisDataTransformationConfig
-    TrainingDataPreparationConfig
+    TrainingDataPreparationConfig,
+    XGBoostSolarConfig
     )
 
 
@@ -124,6 +125,32 @@ class ConfigurationManager:
                 lagged_features=config.lagged_features
                 )
         return training_data_preparation_config
+
+    def get_xgboost_solar_config(self) -> \
+            XGBoostSolarConfig:
+        config = self.config.modeling_XGBoost
+
+        create_directories([config.root_dir])
+
+        xgboost_solar_config = \
+            XGBoostSolarConfig(
+                root_dir=config.root_dir,
+                historical_data=config.historical_data,
+                target=config.target,
+                test_size=config.test_size,
+                cv=config.cv,
+                scoring=config.scoring,
+                max_depth=config.max_depth,
+                learning_rate=config.learning_rate,
+                n_estimators=config.n_estimators,
+                subsample=config.subsample,
+                X_train_data_path=config.X_train_data_path,
+                X_test_data_path=config.X_test_data_path,
+                y_train_data_path=config.y_train_data_path,
+                y_test_data_path=config.y_test_data_path,
+                model_path=config.model_path
+                )
+        return xgboost_solar_config
 
     # def get_solis_data_transformation_config(self) -> \
     #         SolisDataTransformationConfig:

@@ -93,3 +93,22 @@ class TrainingDataPreparationConfig:
     target_var: str
     laggTime: list[int]
     lagged_features: list
+
+
+@dataclass(frozen=True)
+class XGBoostSolarConfig:
+    root_dir: Path
+    historical_data: Path
+    target: str
+    test_size: float
+    cv: int
+    scoring: str
+    max_depth: list[int]
+    learning_rate: list[float]
+    n_estimators: list[int]
+    subsample: list[float]
+    X_train_data_path: Path
+    X_test_data_path: Path
+    y_train_data_path: Path
+    y_test_data_path: Path
+    model_path: Path
