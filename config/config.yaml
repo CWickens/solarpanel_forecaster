@@ -87,6 +87,27 @@ solis_data_ingestion:
   Content_Type: "application/json"
   CanonicalizedResource: "/v1/api/inverterDay"
 
+training_data_preparation:
+ root_dir: artifacts/03_features
+ input_data_15minutely: artifacts/02_intermediate/historical_15minutely_data.pickle
+ input_data_hourly: artifacts/02_intermediate/historical_hourly_data.pickle
+ input_solis: artifacts/01_raw/solis_historical.pickle 
+ output_file_train: artifacts/03_features/historical_training_data.pickle
+ target_var: pac
+ resample: 1h
+ laggTime: [1,2,3]
+ lagged_features:
+    - direct_normal_irradiance
+    - direct_radiation_instant
+    - cloud_cover
+    - cloud_cover_low
+    - cloud_cover_mid
+    - cloud_cover_high
+    - is_day
+  
+
+    
+
 solis_data_transformation:
   root_dir: artifacts/02_intermediate
   input_file: artifacts/01_raw/solis.json 

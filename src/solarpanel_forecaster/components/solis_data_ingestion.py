@@ -106,5 +106,3 @@ class SolisDataIngestion:
             df_all = pd.concat([df_all, df_temp])
 
         return df_all
-
-

@@ -80,3 +80,16 @@ class SolisDataTransformationConfig:
     root_dir: str
     input_file: Path
     output_file: Path
+
+
+@dataclass(frozen=True)
+class TrainingDataPreparationConfig:
+    root_dir: Path
+    input_data_15minutely: Path
+    input_data_hourly: Path
+    output_file_train: Path
+    input_solis: Path
+    resample: str
+    target_var: str
+    laggTime: list[int]
+    lagged_features: list
