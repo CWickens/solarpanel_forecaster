@@ -3,7 +3,7 @@ from solarpanel_forecaster.components.open_metroAPI import (
     OpenMetroAPI)
 from solarpanel_forecaster import logger
 
-STAGE_NAME = "TRAINING PIPELINE STAGE 01: Read in open metro historical data"
+STAGE_NAME = "STAGE 01: Read in open metro historical data"
 
 
 class HistoricalOpenMetroAPIPipeline:

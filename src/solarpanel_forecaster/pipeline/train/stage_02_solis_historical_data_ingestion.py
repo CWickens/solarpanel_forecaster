@@ -4,7 +4,7 @@ from solarpanel_forecaster.components.solis_data_ingestion import (
 from solarpanel_forecaster import logger
 
 
-STAGE_NAME = "Solis data ingestion"
+STAGE_NAME = "STAGE 02: Solis data ingestion"
 
 
 class SolisHistoricalDataIngestionPipeline:

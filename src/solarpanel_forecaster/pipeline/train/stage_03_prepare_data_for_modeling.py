@@ -3,7 +3,7 @@ from solarpanel_forecaster.components.prepare_data import (
     PrepareData)
 from solarpanel_forecaster import logger
 
-STAGE_NAME = "Prepare data for modeling"
+STAGE_NAME = "STAGE 03: Prepare data for modeling"
 
 
 class PrepareDataTrainingPipeline:
