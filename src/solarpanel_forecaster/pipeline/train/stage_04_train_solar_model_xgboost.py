@@ -60,7 +60,7 @@ class XGBoostSolarTrainingPipeline:
         plt.ylabel('Value')
         plt.title('Actual vs. Predicted Values (sample region)')
         plt.legend()
-        plt.show()
+        plt.show(block=False)
 
 
 if __name__ == '__main__':
