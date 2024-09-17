@@ -14,7 +14,8 @@ from solarpanel_forecaster.entity.config_entity import (
     OpenMetroForecastConfig,
     SolisDataIngestionConfig,
     SolisPrivateConfig,
-    SolisDataTransformationConfig
+    # SolisDataTransformationConfig
+    TrainingDataPreparationConfig
     )
 
 
@@ -104,13 +105,33 @@ class ConfigurationManager:
         )
         return solis_private_config
 
-    def get_solis_data_transformation_config(self) -> \
-            SolisDataTransformationConfig:
-        config = self.config.solis_data_transformation
+    def get_training_data_preparation_config(self) -> \
+            TrainingDataPreparationConfig:
+        config = self.config.training_data_preparation
 
-        solis_data_transformation_config = SolisDataTransformationConfig(
-            root_dir=config.root_dir,
-            input_file=config.input_file,
-            output_file=config.output_file
-        )
-        return solis_data_transformation_config
+        create_directories([config.root_dir])
+
+        training_data_preparation_config = \
+            TrainingDataPreparationConfig(
+                root_dir=config.root_dir,
+                input_data_15minutely=config.input_data_15minutely,
+                input_data_hourly=config.input_data_hourly,
+                input_solis=config.input_solis,
+                output_file_train=config.output_file_train,
+                target_var=config.target_var,
+                resample=config.resample,
+                laggTime=config.laggTime,
+                lagged_features=config.lagged_features
+                )
+        return training_data_preparation_config
+
+    # def get_solis_data_transformation_config(self) -> \
+    #         SolisDataTransformationConfig:
+    #     config = self.config.solis_data_transformation
+
+    #     solis_data_transformation_config = SolisDataTransformationConfig(
+    #         root_dir=config.root_dir,
+    #         input_file=config.input_file,
+    #         output_file=config.output_file
+    #     )
+    #     return solis_data_transformation_config

@@ -166,3 +166,5 @@ artifacts/*
 
 # don't push secret information to git
 config/secret_keys.yaml
+
+.cache.sqlite
