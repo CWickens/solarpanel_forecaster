@@ -1,5 +1,3 @@
-
-import pandas as pd
 from solarpanel_forecaster.config.configuration import ConfigurationManager
 from solarpanel_forecaster.components.prepare_data import (
     PrepareData)
