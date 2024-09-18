@@ -33,7 +33,6 @@ class XGBoostSolarTrainingPipeline:
             y_test=y_test,
             best_params=best_params)
 
-
         logger.info('Save model')
         xgboost_solar.save_model(model=final_model)
         logger.info('Save complete!')
