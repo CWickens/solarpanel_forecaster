@@ -2,6 +2,8 @@ from solarpanel_forecaster.config.configuration import ConfigurationManager
 from solarpanel_forecaster.components.open_metroAPI import (
     OpenMetroAPI)
 from solarpanel_forecaster import logger
+import datetime
+import pytz
 
 STAGE_NAME = "STAGE 01: Read in open metro forecast data"
 
@@ -24,13 +26,20 @@ class ForecastOpenMetroAPIPipeline:
         forecast_API_client = open_metro_api.get_forecast_api_client(
             base_url_params=dic_base_url)
 
-        logger.info("Extracting 15 minutely data")
+        utc_time = datetime.datetime.now(pytz.utc)
+        logger.info(f'Live time is in "UTC" is {utc_time}')
+        
+        logger.info("Extracting 15 minutely data - including past_days")
         df_forecast_15minuetly = open_metro_api.extract_15_minutely_data(
             api_client=forecast_API_client)
 
-        logger.info("Extracting hourly data")
+        logger.info("Extracting hourly data - including past_days")
         df_forecast_hourly = open_metro_api.extract_hourly_data(
             api_client=forecast_API_client)
+
+        logger.info("Remove past_days data")
+        df_forecast_15minuetly = df_forecast_15minuetly[utc_time:]
+        df_forecast_hourly = df_forecast_hourly.loc[utc_time:]
 
         logger.info("Saving forecast open metro data")
         open_metro_api.save_forecast_data(df_15minuetly=df_forecast_15minuetly,
