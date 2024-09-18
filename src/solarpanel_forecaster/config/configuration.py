@@ -6,12 +6,17 @@ from solarpanel_forecaster.constants import (
     )
 from solarpanel_forecaster.utils.common import read_yaml, create_directories
 from solarpanel_forecaster.entity.config_entity import (
-    LiveWeatherDataIngestionConfig,
-    OpenWeatherMapPrivateConfig,
-    LiveWeatherDataTransformationConfig,
+    # LiveWeatherDataIngestionConfig,
+    # OpenWeatherMapPrivateConfig,
+    # LiveWeatherDataTransformationConfig,
+    OpenMetroAPIConfig,
+    OpenMetroHitoricalConfig,
+    OpenMetroForecastConfig,
     SolisDataIngestionConfig,
     SolisPrivateConfig,
-    SolisDataTransformationConfig
+    # SolisDataTransformationConfig
+    TrainingDataPreparationConfig,
+    XGBoostSolarConfig
     )
 
 
@@ -30,47 +35,45 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
-    def get_live_weather_data_ingestion_config(self) \
-            -> LiveWeatherDataIngestionConfig:
-
-        config = self.config.live_weather_data_ingestion
+    def get_open_metro_API_config(self) -> OpenMetroAPIConfig:
+        config = self.config.open_metro_API
 
         create_directories([config.root_dir])
 
-        live_weather_data_ingestion_config = LiveWeatherDataIngestionConfig(
-            root_dir=config.root_dir,
-            base_url=config.base_url,
-            base_url_forecast=config.base_url_forecast,
-            local_data_file=config.local_data_file,
-            hours_of_history=config.hours_of_history,
-            secret_info=config.secret_info
-        )
-        return live_weather_data_ingestion_config
-
-    def get_openweathermap_private_config(self) -> OpenWeatherMapPrivateConfig:
-        config_secret = self.config_secret.openweathermap_private
-
-        openweathermap_private_config = OpenWeatherMapPrivateConfig(
-            lat=config_secret.lat,
-            lon=config_secret.lon,
-            apikey=config_secret.apikey)
-        return openweathermap_private_config
-
-    def get_live_weather_data_transformation_config(self) \
-            -> LiveWeatherDataTransformationConfig:
-        config = self.config.live_weather_data_transformation
-
-        create_directories([config.root_dir])
-
-        live_weather_data_transformation_config = \
-            LiveWeatherDataTransformationConfig(
+        open_metro_API_config = \
+            OpenMetroAPIConfig(
                 root_dir=config.root_dir,
-                input_file=config.input_file,
-                output_file_forecast=config.output_file_forecast,
-                output_file_actuals=config.output_file_actuals,
-                hours_of_forecast=config.hours_of_forecast
-                )
-        return live_weather_data_transformation_config
+                latitude=config.latitude,
+                longitude=config.longitude,
+                features_minutely_15=config.features_minutely_15,
+                features_hourly=config.features_hourly
+            )
+
+        return open_metro_API_config
+
+    def get_open_metro_hitorical_config(self) -> OpenMetroHitoricalConfig:
+        config = self.config.open_metro_hitorical
+
+        open_metro_hitorical_config = \
+            OpenMetroHitoricalConfig(
+                local_data_file_15minutely=config.local_data_file_15minutely,
+                local_data_file_hourly=config.local_data_file_hourly,
+                start_date=config.start_date,
+                end_date=config.end_date
+            )
+        return open_metro_hitorical_config
+
+    def get_open_metro_forecast_config(self) -> OpenMetroForecastConfig:
+        config = self.config.open_metro_forecast
+
+        open_metro_forecast_config = \
+            OpenMetroForecastConfig(
+                local_data_file_15minutely=config.local_data_file_15minutely,
+                local_data_file_hourly=config.local_data_file_hourly,
+                past_days=config.past_days,
+                forecast_days=config.forecast_days
+            )
+        return open_metro_forecast_config
 
     def get_solis_data_ingestion_config(self) -> SolisDataIngestionConfig:
         config = self.config.solis_data_ingestion
@@ -80,7 +83,10 @@ class ConfigurationManager:
         solis_data_ingestion_config = \
             SolisDataIngestionConfig(
                 root_dir=config.root_dir,
-                output_file=config.output_file,
+                output_file_training=config.output_file_training,
+                output_file_today=config.output_file_today,
+                training_start_date=config.training_start_date,
+                training_end_date=config.training_end_date,
                 url=config.url,
                 VERB=config.VERB,
                 string_format=config.string_format,
@@ -100,13 +106,59 @@ class ConfigurationManager:
         )
         return solis_private_config
 
-    def get_solis_data_transformation_config(self) -> \
-            SolisDataTransformationConfig:
-        config = self.config.solis_data_transformation
+    def get_training_data_preparation_config(self) -> \
+            TrainingDataPreparationConfig:
+        config = self.config.training_data_preparation
 
-        solis_data_transformation_config = SolisDataTransformationConfig(
-            root_dir=config.root_dir,
-            input_file=config.input_file,
-            output_file=config.output_file
-        )
-        return solis_data_transformation_config
+        create_directories([config.root_dir])
+
+        training_data_preparation_config = \
+            TrainingDataPreparationConfig(
+                root_dir=config.root_dir,
+                input_data_15minutely=config.input_data_15minutely,
+                input_data_hourly=config.input_data_hourly,
+                input_solis=config.input_solis,
+                output_file_train=config.output_file_train,
+                target_var=config.target_var,
+                resample=config.resample,
+                laggTime=config.laggTime,
+                lagged_features=config.lagged_features
+                )
+        return training_data_preparation_config
+
+    def get_xgboost_solar_config(self) -> \
+            XGBoostSolarConfig:
+        config = self.config.modeling_XGBoost
+
+        create_directories([config.root_dir])
+
+        xgboost_solar_config = \
+            XGBoostSolarConfig(
+                root_dir=config.root_dir,
+                historical_data=config.historical_data,
+                target=config.target,
+                test_size=config.test_size,
+                cv=config.cv,
+                scoring=config.scoring,
+                max_depth=config.max_depth,
+                learning_rate=config.learning_rate,
+                n_estimators=config.n_estimators,
+                subsample=config.subsample,
+                X_train_data_path=config.X_train_data_path,
+                X_test_data_path=config.X_test_data_path,
+                y_train_data_path=config.y_train_data_path,
+                y_test_data_path=config.y_test_data_path,
+                model_path=config.model_path
+                )
+        return xgboost_solar_config
+
+    # def get_solis_data_transformation_config(self) -> \
+    #         SolisDataTransformationConfig:
+    #     config = self.config.solis_data_transformation
+
+    #     solis_data_transformation_config = SolisDataTransformationConfig(
+    #         root_dir=config.root_dir,
+    #         input_file=config.input_file,
+    #         output_file=config.output_file
+    #     )
+    #     return solis_data_transformation_config

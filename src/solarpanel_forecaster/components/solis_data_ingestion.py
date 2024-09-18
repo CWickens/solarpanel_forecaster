@@ -6,6 +6,7 @@ from datetime import timezone
 import requests
 from solarpanel_forecaster import logger
 import json
+import pandas as pd
 
 
 class SolisDataIngestion:
@@ -82,3 +83,26 @@ class SolisDataIngestion:
             extract_date=todays_formatted_date
             )
         return todays_extract.json()
+
+    def convert_to_data_frame(self, raw_data) -> pd.DataFrame:
+        df = pd.DataFrame(raw_data.json()['data'])
+
+        df['timeStr'] = pd.to_datetime(df['timeStr'])
+        dfCP = df.copy().drop(columns=["dataTimestamp", "time", "pacStr"])
+        dfCP = dfCP.select_dtypes(exclude=['object'])
+
+        dfCP = dfCP.set_index("timeStr")
+
+        return dfCP
+
+    def extract_full_daily_range(self, start_date, end_date):
+        day_list = pd.date_range(start=start_date, end=end_date)
+
+        df_all = pd.DataFrame()
+        for day in day_list:
+            daily_extract = self.extract_day_data(extract_date=day)
+            df_temp = self.convert_to_data_frame(raw_data=daily_extract)
+
+            df_all = pd.concat([df_all, df_temp])
+
+        return df_all
