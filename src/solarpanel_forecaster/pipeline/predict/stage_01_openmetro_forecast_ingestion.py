@@ -28,7 +28,7 @@ class ForecastOpenMetroAPIPipeline:
 
         utc_time = datetime.datetime.now(pytz.utc)
         logger.info(f'Live time is in "UTC" is {utc_time}')
-        
+
         logger.info("Extracting 15 minutely data - including past_days")
         df_forecast_15minuetly = open_metro_api.extract_15_minutely_data(
             api_client=forecast_API_client)
