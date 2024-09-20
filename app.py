@@ -47,7 +47,7 @@ def update_graph(num_days):
 
     # Create the plot
     fig = go.Figure(data=[go.Scatter(x=filtered_df['date'],
-    y=filtered_df['prediction'])])
+                                     y=filtered_df['prediction'])])
 
     current_hourly_time = current_time.strftime("%Y-%m-%d %H")
     title = f'+ {num_days}DAY Solar pannel energy forecast \
