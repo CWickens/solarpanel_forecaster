@@ -49,24 +49,6 @@ class PrepareDataPredictionPipeline:
         df_merged.to_pickle(prediction_save_path)
         logger.info('Saving complete!')
 
-        logger.info('Plot solar energy prediction')
-        fig, axs = plt.subplots(2, 1)
-        fig.tight_layout(pad=4)
-
-        df_merged['prediction'].plot(ax=axs[0])
-        current_hourly_time = df_merged.index[0].strftime("%Y-%m-%d %H")
-        forecast_days = forecast_config.forecast_days
-        axs[0].set_title(
-            f'+ {forecast_days}DAY Solar pannel energy\n \
-                production forecast current time (UTC): {current_hourly_time}')
-
-        df_merged.loc[:df_merged.index[0] + pd.Timedelta('1D')]['prediction']\
-            .plot(ax=axs[1])
-        axs[1].set_title(f'+ 24HR Solar pannel energy production forecast\n \
-                     current time (UTC): {current_hourly_time}')
-
-        plt.show()
-
 
 if __name__ == '__main__':
     try:
