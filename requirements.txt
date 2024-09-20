@@ -24,4 +24,6 @@ xgboost
 shap
 tensorflow 
 keras
+dash
+plotly
 -e .
