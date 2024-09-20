@@ -4,7 +4,6 @@ from solarpanel_forecaster.components.prepare_data import (
 from solarpanel_forecaster import logger
 import pandas as pd
 import pickle
-import matplotlib.pyplot as plt
 
 STAGE_NAME = "STAGE 02: Prepare data and predict solar energy"
 
