@@ -2,7 +2,10 @@ from solarpanel_forecaster.constants import (
     CONFIG_FILE_PATH,
     CONFIG_SECRET_FILE_PATH,
     PARAMS_FILE_PATH,
-    SCHEMA_FILE_PATH
+    SCHEMA_FILE_PATH,
+    SOLIS_KEYID,
+    SOLIS_SECRET_KEY,
+    SOLIS_SN
     )
 from solarpanel_forecaster.utils.common import read_yaml, create_directories
 from solarpanel_forecaster.entity.config_entity import (
@@ -24,12 +27,12 @@ class ConfigurationManager:
     def __init__(
             self,
             config_filepath=CONFIG_FILE_PATH,
-            config_secret_filepath=CONFIG_SECRET_FILE_PATH,
+            # config_secret_filepath=CONFIG_SECRET_FILE_PATH,
             params_filepath=PARAMS_FILE_PATH,
             schema_filepath=SCHEMA_FILE_PATH):
 
         self.config = read_yaml(config_filepath)
-        self.config_secret = read_yaml(config_secret_filepath)
+        # self.config_secret = read_yaml(config_secret_filepath)
         self.params = read_yaml(params_filepath)
         self.schema = read_yaml(schema_filepath)
 
@@ -97,12 +100,12 @@ class ConfigurationManager:
         return solis_data_ingestion_config
 
     def get_solis_private_config(self) -> SolisPrivateConfig:
-        config = self.config_secret.solis_private
+        # config = self.config_secret.solis_private
 
         solis_private_config = SolisPrivateConfig(
-            KeyId=config.KeyId,
-            secretKey=config.secretKey,
-            sn=config.sn
+            KeyId=SOLIS_KEYID,  # config.KeyId,
+            secretKey=SOLIS_SECRET_KEY,  # config.secretKey,
+            sn=SOLIS_SN  # config.sn
         )
         return solis_private_config
 
