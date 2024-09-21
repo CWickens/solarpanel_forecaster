@@ -3,13 +3,10 @@ from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
 import pandas as pd
 from predict import predict
+from train import train_solar_prediction_model
 
 
 app = dash.Dash(__name__)
-
-# trigure prediction pipeline
-predict()
-
 # Sample df
 df = pd.read_pickle('artifacts/04_model/xgboost_solar_prediction.pickle')
 
@@ -18,9 +15,7 @@ app.layout = html.Div([
     html.H3('Enter the number of days for the forecast'),
     dcc.Input(id='num-days-input', type='number',
               placeholder='Enter number of days', value=1, max=7),
-    dcc.Graph(id='time-series-plot'),
-    # html.Button(id='my-button', children='Get live prediction!'),
-    # html.H3(id='output'),
+    dcc.Graph(id='time-series-plot')
 ])
 
 
@@ -57,17 +52,11 @@ def update_graph(num_days):
     return fig
 
 
-# @callback(
-#     Output('output', 'children'),
-#     Input('my-button', 'n_clicks')
-# )
-# def update_output(n_clicks):
-#     if n_clicks is None:
-#         return 'Button not clicked yet.'
-#     else:
-#         predict()
-#         return 'Button clicked {} times.'.format(n_clicks)
-
-
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8080)
+    # train solar prediciton model
+    train_solar_prediction_model()
+    # trigure prediction pipeline
+    predict()
+
+    # if debug=True then script is run twice, which is annoying
+    app.run_server(host="0.0.0.0", port=5002)
