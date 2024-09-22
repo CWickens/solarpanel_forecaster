@@ -5,6 +5,7 @@ import pandas as pd
 from predict import predict
 from train import train_solar_prediction_model
 
+# new line to test CICD ...
 
 app = dash.Dash(__name__)
 # Sample df
