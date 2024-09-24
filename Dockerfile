@@ -9,9 +9,9 @@ RUN apt update -y && apt-get install --assume-yes pkg-config awscli gcc g++ libh
 # RUN apt update -y && apt-get install --assume-yes pkg-config awscli
 # apt install pkg-config &&
 
-# RUN pip install -r requirements_old.txt
+RUN pip install -r requirements_old.txt
 # RUN pip install -r requirements_test.txt
-RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt
 
 # Define the command to run when the container starts
 CMD ["python", "app.py"]
