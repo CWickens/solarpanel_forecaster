@@ -18,12 +18,12 @@ asyncio
 aiohttp
 pytest-mock
 async_timeout
-torch
+# torch
 scikit-learn
 xgboost
 shap
-tensorflow 
-keras
+# tensorflow 
+# keras
 dash
 plotly
 -e .
