@@ -71,6 +71,7 @@ class SolisDataIngestion:
                   }
 
         req = self.config.url + self.config.CanonicalizedResource
+        logger.info('requests.post(req, data=Body, headers=header)')
         x = requests.post(req, data=Body, headers=header)
 
         return x
@@ -85,7 +86,9 @@ class SolisDataIngestion:
         return todays_extract.json()
 
     def convert_to_data_frame(self, raw_data) -> pd.DataFrame:
+        logger.info('inside convert_to_data_frame')
         df = pd.DataFrame(raw_data.json()['data'])
+        logger.info(df.head())
 
         df['timeStr'] = pd.to_datetime(df['timeStr'])
         dfCP = df.copy().drop(columns=["dataTimestamp", "time", "pacStr"])
@@ -100,8 +103,10 @@ class SolisDataIngestion:
 
         df_all = pd.DataFrame()
         for day in day_list:
+            logger.info(f'running extract_day_data() on {day}')
             daily_extract = self.extract_day_data(extract_date=day)
             df_temp = self.convert_to_data_frame(raw_data=daily_extract)
+            logger.info(f'df_temp: {df_temp.head()}')
 
             df_all = pd.concat([df_all, df_temp])
 
