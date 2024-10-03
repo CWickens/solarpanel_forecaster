@@ -72,13 +72,8 @@ class SolisDataIngestion:
 
         req = self.config.url + self.config.CanonicalizedResource
         logger.info('requests.post(req, data=Body, headers=header)')
-        try:
-            x = requests.post(req, data=Body, headers=header)
-            x.raise_for_status()  # This will raise an exception for HTTP errors
-        except requests.exceptions.RequestException as e:
-            # Handle the error here
-            logger.info(f"Error occurred: {e}")
-            
+        x = requests.post(req, data=Body, headers=header)
+        logger.info(f'output ={x}')
 
         return x
 
