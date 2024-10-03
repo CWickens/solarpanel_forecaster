@@ -111,9 +111,9 @@ class SolisDataIngestion:
 
         df_all = pd.DataFrame()
         for day in day_list:
-            pause_duration = 10  # seconds
+            # pause_duration = 10  # seconds
             # Test pause functionality independently
-            simplified_sleep(pause_duration)
+            # simplified_sleep(pause_duration)
             logger.info(f'running extract_day_data() on {day}')
             daily_extract = self.extract_day_data(extract_date=day)
             df_temp = self.convert_to_data_frame(raw_data=daily_extract)
