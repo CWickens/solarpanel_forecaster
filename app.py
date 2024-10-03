@@ -6,6 +6,10 @@ from predict import predict
 from train import train_solar_prediction_model
 
 # new line to test CICD ...
+# train solar prediciton model
+train_solar_prediction_model()
+# trigure prediction pipeline
+predict()
 
 app = dash.Dash(__name__)
 # Sample df
@@ -55,9 +59,9 @@ def update_graph(num_days):
 
 if __name__ == '__main__':
     # train solar prediciton model
-    train_solar_prediction_model()
+    # train_solar_prediction_model()
     # trigure prediction pipeline
-    predict()
+    # predict()
 
     # if debug=True then script is run twice, which is annoying
     app.run_server(host="0.0.0.0", port=5002)
