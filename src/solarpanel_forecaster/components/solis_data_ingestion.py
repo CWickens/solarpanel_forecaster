@@ -7,6 +7,7 @@ import requests
 from solarpanel_forecaster import logger
 import json
 import pandas as pd
+import time
 
 
 class SolisDataIngestion:
@@ -71,9 +72,12 @@ class SolisDataIngestion:
                   }
 
         req = self.config.url + self.config.CanonicalizedResource
+        pause_duration = 1  # seconds
+        logger.info(f'Start {pause_duration} s pause')
+        time.sleep(1)
+        logger.info('End pause')
         logger.info('requests.post(req, data=Body, headers=header)')
         x = requests.post(req, data=Body, headers=header)
-        logger.info(f'output ={x}')
 
         return x
 
