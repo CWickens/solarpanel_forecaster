@@ -72,10 +72,6 @@ class SolisDataIngestion:
                   }
 
         req = self.config.url + self.config.CanonicalizedResource
-        pause_duration = 1  # seconds
-        logger.info(f'Start {pause_duration} s pause')
-        time.sleep(1)
-        logger.info('End pause')
         logger.info('requests.post(req, data=Body, headers=header)')
         x = requests.post(req, data=Body, headers=header)
 
@@ -108,6 +104,10 @@ class SolisDataIngestion:
 
         df_all = pd.DataFrame()
         for day in day_list:
+            pause_duration = 1  # seconds
+            logger.info(f'Start {pause_duration} s pause')
+            time.sleep(pause_duration)
+            logger.info('End pause')
             logger.info(f'running extract_day_data() on {day}')
             daily_extract = self.extract_day_data(extract_date=day)
             df_temp = self.convert_to_data_frame(raw_data=daily_extract)
