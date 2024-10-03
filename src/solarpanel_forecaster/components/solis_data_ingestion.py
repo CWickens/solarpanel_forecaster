@@ -104,7 +104,7 @@ class SolisDataIngestion:
 
         df_all = pd.DataFrame()
         for day in day_list:
-            pause_duration = 1  # seconds
+            pause_duration = 60  # seconds
             logger.info(f'Start {pause_duration} s pause')
             time.sleep(pause_duration)
             logger.info('End pause')
