@@ -73,7 +73,7 @@ class SolisDataIngestion:
 
         req = self.config.url + self.config.CanonicalizedResource
         logger.info('requests.post(req, data=Body, headers=header)')
-        x = requests.post(req, data=Body, headers=header)
+        x = requests.post(req, data=Body, headers=header, timeout=60)
 
         return x
 
