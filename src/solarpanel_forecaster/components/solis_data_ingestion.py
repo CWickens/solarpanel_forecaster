@@ -100,14 +100,20 @@ class SolisDataIngestion:
         return dfCP
 
     def extract_full_daily_range(self, start_date, end_date):
+
+        def simplified_sleep(duration):
+            """For testing pause functionality independently."""
+            logger.info(f'Start {duration} s pause')
+            time.sleep(duration)
+            logger.info('End pause')
+
         day_list = pd.date_range(start=start_date, end=end_date)
 
         df_all = pd.DataFrame()
         for day in day_list:
-            pause_duration = 60  # seconds
-            logger.info(f'Start {pause_duration} s pause')
-            time.sleep(pause_duration)
-            logger.info('End pause')
+            pause_duration = 10  # seconds
+            # Test pause functionality independently
+            simplified_sleep(pause_duration)
             logger.info(f'running extract_day_data() on {day}')
             daily_extract = self.extract_day_data(extract_date=day)
             df_temp = self.convert_to_data_frame(raw_data=daily_extract)
