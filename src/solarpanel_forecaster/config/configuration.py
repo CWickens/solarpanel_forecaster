@@ -21,6 +21,7 @@ from solarpanel_forecaster.entity.config_entity import (
     TrainingDataPreparationConfig,
     XGBoostSolarConfig
     )
+from solarpanel_forecaster import logger
 
 
 class ConfigurationManager:
@@ -107,6 +108,11 @@ class ConfigurationManager:
             secretKey=SOLIS_SECRET_KEY,  # config.secretKey,
             sn=SOLIS_SN  # config.sn
         )
+        logger.info('CHECK')
+        logger.info(f'SOLIS_KEYID[0:2] {SOLIS_KEYID[0:2]}')
+        logger.info(f'SOLIS_SECRET_KEY[0:2] {SOLIS_SECRET_KEY[0:2]}')
+        logger.info(f'SOLIS_SN[0:2] {SOLIS_SN[0:2]}')
+        logger.info('CHECK')
         return solis_private_config
 
     def get_training_data_preparation_config(self) -> \
