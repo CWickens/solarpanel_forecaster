@@ -46,6 +46,28 @@ class SolisDataIngestion:
 
         return encoded_single_day_request, single_day_request
 
+    def retry(max_retries=3, backoff=10):
+        """Retry decorator for handling exceptions and retrying requests."""
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                retries = 0
+                while retries < max_retries:
+                    try:
+                        result = func(*args, **kwargs)
+                        if result:  # Check if output is empty
+                            return result
+                        else:
+                            raise ValueError("Empty output")
+                    except Exception as e:
+                        retries += 1
+                        delay = backoff ** retries
+                        logger.warning(f"Error occurred: {e}. Retrying in {delay} seconds.")
+                        time.sleep(delay)
+                raise Exception("All retry attempts failed.")
+            return wrapper
+        return decorator
+
+    @retry()
     def extract_day_data(self, extract_date):
         Content_MD5, Body = self._prepare_data_request(date=extract_date)
         now = datetime.now(timezone.utc)
