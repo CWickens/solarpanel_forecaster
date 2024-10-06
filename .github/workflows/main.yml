@@ -92,7 +92,7 @@ jobs:
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 5002:5002 --ipc="host" --name=mltest -e 'SOLIS_KEYID=${{ secrets.SOLIS_KEYID }}' -e 'SOLIS_SECRET_KEY=${{ secrets.SOLIS_SECRET_KEY }}' -e 'SOLIS_SN=${{ secrets.SOLIS_SN }}' -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+         docker run -d -p 5002:5002 --ipc="host" --name=mltest -e 'CELL_LATITUDE=${{ secrets.CELL_LATITUDE }}' -e 'CELL_LONGITUDE=${{ secrets.CELL_LONGITUDE }}' -e 'SOLIS_KEYID=${{ secrets.SOLIS_KEYID }}' -e 'SOLIS_SECRET_KEY=${{ secrets.SOLIS_SECRET_KEY }}' -e 'SOLIS_SN=${{ secrets.SOLIS_SN }}' -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
       - name: Clean previous images and containers
         run: |
          docker system prune -f
