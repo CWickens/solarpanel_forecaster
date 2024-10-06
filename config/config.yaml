@@ -19,8 +19,6 @@ artifacts_root: artifacts
 
 open_metro_API:
   root_dir: artifacts/02_intermediate
-  latitude: ***REMOVED***
-  longitude: ***REMOVED***
   features_minutely_15: 
     - temperature_2m
     - relative_humidity_2m
