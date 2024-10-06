@@ -5,7 +5,9 @@ from solarpanel_forecaster.constants import (
     SCHEMA_FILE_PATH,
     SOLIS_KEYID,
     SOLIS_SECRET_KEY,
-    SOLIS_SN
+    SOLIS_SN,
+    CELL_LATITUDE,
+    CELL_LONGITUDE
     )
 from solarpanel_forecaster.utils.common import read_yaml, create_directories
 from solarpanel_forecaster.entity.config_entity import (
@@ -46,8 +48,8 @@ class ConfigurationManager:
         open_metro_API_config = \
             OpenMetroAPIConfig(
                 root_dir=config.root_dir,
-                latitude=config.latitude,
-                longitude=config.longitude,
+                latitude=CELL_LATITUDE,
+                longitude=CELL_LONGITUDE,
                 features_minutely_15=config.features_minutely_15,
                 features_hourly=config.features_hourly
             )
