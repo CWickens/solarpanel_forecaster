@@ -4,20 +4,27 @@ import plotly.graph_objects as go
 import pandas as pd
 from predict import predict
 from train import train_solar_prediction_model
+import dash_bootstrap_components as dbc
+from dash_bootstrap_templates import load_figure_template
 
-# new line to test CICD ...
+load_figure_template('CYBORG')
+
 # train solar prediciton model
 train_solar_prediction_model()
 # trigure prediction pipeline
 predict()
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__,
+                external_stylesheets=[dbc.themes.CYBORG])
 # Sample df
 df = pd.read_pickle('artifacts/04_model/xgboost_solar_prediction.pickle')
 
 
 app.layout = html.Div([
-    html.H3('Enter the number of days for the forecast'),
+    html.H1('Home solar panel energy forecaster'),
+    html.Hr(),
+    html.H1(''),
+    html.H6('Number of days to forecast'),
     dcc.Input(id='num-days-input', type='number',
               placeholder='Enter number of days', value=1, max=7),
     dcc.Graph(id='time-series-plot')
@@ -48,22 +55,21 @@ def update_graph(num_days):
     # Create the plot
     fig = go.Figure(data=[go.Scatter(
         x=filtered_df['date'],
-        y=filtered_df['prediction'])],
+        y=filtered_df['prediction'],
+        fill='tozeroy')],
         layout=go.Layout(yaxis=dict(title='W')))
+    # Set the theme to 'plotly_dark' for dark mode
+    fig.update_layout(template='plotly_dark')
 
-    current_hourly_time = current_time.strftime("%Y-%m-%d %H")
-    title = f'+ {num_days}DAY Solar pannel energy forecast \
-        \n [UTC: {current_hourly_time}]'
-
-    fig.update_layout(title=title)
+    title = f'Solar energy forecast (+ {num_days}DAY)'
+    fig.update_layout(
+        title=title,
+        title_font=dict(size=25, family='Arial, sans-serif', color='white'),
+        title_x=0.5  # Center the title
+        )
     return fig
 
 
 if __name__ == '__main__':
-    # train solar prediciton model
-    # train_solar_prediction_model()
-    # trigure prediction pipeline
-    # predict()
-
     # if debug=True then script is run twice, which is annoying
     app.run_server(host="0.0.0.0", port=5002)

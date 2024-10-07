@@ -26,4 +26,6 @@ shap
 # keras
 dash
 plotly
+dash-bootstrap-components==1.6.0
+dash-bootstrap-templates==1.2.4
 -e .
