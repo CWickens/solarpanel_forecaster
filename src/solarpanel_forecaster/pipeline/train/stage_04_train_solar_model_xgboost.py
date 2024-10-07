@@ -56,7 +56,7 @@ class XGBoostSolarTrainingPipeline:
 
         # Add labels, title, and legend
         plt.xlabel('Time')
-        plt.ylabel('Value')
+        plt.ylabel('W')
         plt.title('Actual vs. Predicted Values (sample region)')
         plt.legend()
         plt.show(block=False)
