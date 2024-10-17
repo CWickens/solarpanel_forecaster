@@ -4,7 +4,6 @@ import plotly.graph_objects as go
 import pandas as pd
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
-import json
 
 from predict import predict
 from train import train_solar_prediction_model
