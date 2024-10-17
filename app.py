@@ -1,9 +1,10 @@
 import dash
-from dash import dcc, html, Input, Output, callback
+from dash import dcc, html, Input, Output, callback, clientside_callback
 import plotly.graph_objects as go
 import pandas as pd
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
+import json
 
 from predict import predict
 from train import train_solar_prediction_model
@@ -45,7 +46,8 @@ app.layout = html.Div([
         max=MAX_FORECAST_DAYS
     ),
     html.Button('Update Prediction', id='update-button', n_clicks=0),
-    dcc.Graph(id='time-series-plot')
+    dcc.Graph(id='time-series-plot'),
+    html.Div(id='area-output')
 ])
 
 
@@ -76,13 +78,53 @@ def update_graph(num_days, n_clicks):
         template='plotly_dark',
         yaxis_title='W',
         yaxis=dict(range=[0, max(filtered_df['prediction'].max(), 3500)]),
-        title=f'Solar energy forecast (+ {num_days} DAY)',
+        title='Solar energy forecast',
         title_font=dict(size=25, family='Arial, sans-serif', color='white'),
         title_x=0.5
     )
 
     return fig
 
+
+# Client-side callback to calculate area under the curve
+clientside_callback(
+    """
+    function(relayoutData, figure) {
+        if (!relayoutData || !figure || !figure.data || figure.data.length === 0) {
+            return "Zoom or pan to calculate area";
+        }
+
+        let xRange = [figure.layout.xaxis.range[0], figure.layout.xaxis.range[1]];
+        if (relayoutData['xaxis.range[0]'] && relayoutData['xaxis.range[1]']) {
+            xRange = [relayoutData['xaxis.range[0]'], relayoutData['xaxis.range[1]']];
+        }
+
+        let data = figure.data[0];
+        let x = data.x;
+        let y = data.y;
+
+        let visiblePoints = x.map((val, idx) => ({x: new Date(val).getTime(), y: y[idx]}))
+                             .filter(point => point.x >= new Date(xRange[0]).getTime() && point.x <= new Date(xRange[1]).getTime());
+
+        if (visiblePoints.length < 2) {
+            return "Not enough visible points to calculate area";
+        }
+
+        let area = 0;
+        for (let i = 1; i < visiblePoints.length; i++) {
+            let width = (visiblePoints[i].x - visiblePoints[i-1].x) / 1000; // Convert to seconds
+            let avgHeight = (visiblePoints[i].y + visiblePoints[i-1].y) / 2;
+            area += width * avgHeight;
+        }
+
+        let areaKWh = area / 3600 / 1000; // Convert from W*s to kWh
+        return `Energy in visible range: ${areaKWh.toFixed(2)} kWh`;
+    }
+    """,
+    Output('area-output', 'children'),
+    Input('time-series-plot', 'relayoutData'),
+    Input('time-series-plot', 'figure')
+)
 
 if __name__ == '__main__':
     app.run_server(host="0.0.0.0", port=PORT)
